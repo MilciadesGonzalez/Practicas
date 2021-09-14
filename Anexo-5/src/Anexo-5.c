@@ -8,27 +8,35 @@
 
 #include <stdlib.h>
 #include "MenuOpciones.h"
+#define TAM 5
 
 int main(void) {
 	setbuf(stdout,NULL);
 
 	int opcion;
+	int edades[TAM];
+
 
 	do {
 		opcion = MenuOpciones();
 
 		switch (opcion) {
 			case 1:
-				printf("\nUd. ha seleccionado lo opción 1-Inicializar\n");
+				Inicializar(edades, TAM);
+				printf("\nFuncion inicializada...\n");
+				printf("\n");
 			break;
 			case 2:
-				printf("\nUd. ha seleccionado lo opción 2-Cargar\n");
+				Cargar(edades, TAM);
+				printf("\n");
 			break;
 			case 3:
-				printf("\nUd. ha seleccionado lo opción 3-Mostrar\n");
+			    MostrarTodos(edades, TAM);
+			    MostrarIndividual(edades, TAM);
+				printf("\n");
 			break;
 			case 4:
-				printf("\nUd. ha seleccionado lo opción 4-Calcular Promedio\n");
+				Calculos(edades, TAM);
 			break;
 			case 5:
 				printf("\nUd. ha seleccionado lo opción 5-Ordenar\n");
@@ -43,4 +51,5 @@ int main(void) {
 
 
 	return 0;
+
 }

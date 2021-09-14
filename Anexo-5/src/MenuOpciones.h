@@ -11,4 +11,14 @@
 
 int MenuOpciones();
 
+void Inicializar(int edades[], int tam);
+
+void Cargar(int edades[], int tam);
+
+void MostrarTodos(int edades[], int tam);
+
+void MostrarIndividual(int edades[], int tam);
+
+float Calculos(int edades[], int tam);
+
 #endif /* MENUOPCIONES_H_ */
