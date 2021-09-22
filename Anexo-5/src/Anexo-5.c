@@ -15,6 +15,7 @@ int main(void) {
 
 	int opcion;
 	int edades[TAM];
+	float promedio;
 
 
 	do {
@@ -32,14 +33,20 @@ int main(void) {
 			break;
 			case 3:
 			    MostrarTodos(edades, TAM);
-			    MostrarIndividual(edades, TAM);
+				printf("\n");
 				printf("\n");
 			break;
 			case 4:
-				Calculos(edades, TAM);
+				Calculos(edades, TAM, &promedio);
+				printf("\nEl promedio de las edades es: %.2f", promedio);
+				printf("\n");
+				printf("\n");
 			break;
 			case 5:
-				printf("\nUd. ha seleccionado lo opción 5-Ordenar\n");
+				Ordenar(edades, TAM);
+				MostrarTodos(edades, TAM);
+				printf("\n");
+				printf("\n");
 			break;
 			case 6:
 			break;

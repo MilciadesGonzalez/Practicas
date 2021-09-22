@@ -17,8 +17,10 @@ void Cargar(int edades[], int tam);
 
 void MostrarTodos(int edades[], int tam);
 
-void MostrarIndividual(int edades[], int tam);
+int MostrarIndividual(int edad);
 
-float Calculos(int edades[], int tam);
+float Calculos(int edades[], int tam, float* prom);
+
+void Ordenar(int edades[], int tam);
 
 #endif /* MENUOPCIONES_H_ */

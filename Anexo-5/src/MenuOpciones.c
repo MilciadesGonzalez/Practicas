@@ -9,7 +9,6 @@
 int MenuOpciones(){
 	int opcion;
 
-		//printf("1-Inicializar\n2-Cargar\n3-Mostrar\n4-Calcular Promedio\n5-Ordenar\n6-Salir\n");
 		printf("1-Inicializar\n");
 		printf("2-Cargar\n");
 		printf("3-Mostrar\n");
@@ -50,50 +49,56 @@ void Cargar(int edades[], int tam){
 	} while (rta == 's');
 }
 void MostrarTodos(int edades[], int tam){
-
+	printf("\n");
+	printf("Edades: ");
     for(int i=0; i<tam; i++){
         if(edades[i] > 0){
-            printf("\nEdad ingresada: %d", edades[i]);
-            printf("\n");
+            MostrarIndividual(edades[i]);
         }
 
     }
 }
-void MostrarIndividual(int edades[], int tam){
+int MostrarIndividual(int edad){
+	printf("\n%d", edad);
 
-    int posicion;
-    char rta;
-
-    do {
-        printf("\nIngrese posición(1 al 5) para visualizar la edad: ");
-        scanf("%d", &posicion);
-
-        printf("\nLa edad ingresada fue: %d", edades[posicion-1]);
-        printf("\n");
-
-        printf("\nQuire visualizar otra posición? s/n.");
-        fflush(stdin);
-        scanf("%c", &rta);
-        printf("\n");
-
-    } while(rta == 's');
+	return edad;
 }
-float Calculos(int edades[], int tam){
+float Calculos(int edades[], int tam, float* prom){
 
     int acumulador;
+    int contador;
     float resultado;
     int i;
 
-    //acumulador = 0;
+    acumulador = 0;
+    contador = 0;
 
     for(i=0; i<tam; i++){
-        acumulador += edades[i];
-    }
-    resultado = (float)acumulador / i;
+    	if(edades[i]>0){
+    		acumulador += edades[i];
+    		contador++;
+    	}
 
-    printf("\nEl promedio de las edades es: %2.f", resultado);
-    printf("\n");
+    }
+    *prom = (float)acumulador / contador;
+    if(prom > 0){
+    	resultado = 1;
+    }else{
+    	resultado = 0;
+    }
 
     return resultado;
+}
+void Ordenar(int edades[], int tam){
+	int aux;
+	for(int i=0; i<tam-1; i++){
+		for(int j=i+1; j<tam; j++){
+			if(edades[i]>edades[j]){
+				aux = edades[i];
+				edades[i] = edades[j];
+				edades[j] = aux;
+			}
+		}
+	}
 }
 
