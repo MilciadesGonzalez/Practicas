@@ -8,19 +8,20 @@
 #ifndef MENUOPCIONES_H_
 #define MENUOPCIONES_H_
 #include <stdio.h>
+#include <string.h>
 
 int MenuOpciones();
 
-void Inicializar(int edades[], int tam);
+void Inicializar(int edades[], int sueldo[], int tam);
 
-void Cargar(int edades[], int tam);
+void Cargar(int edades[], int sueldo[], char nombres[][20], int tam);
 
-void MostrarTodos(int edades[], int tam);
+void MostrarTodos(int edades[], int sueldo[], int tam);
 
-int MostrarIndividual(int edad);
+void MostrarIndividual(int edad, int sueldo);
 
-float Calculos(int edades[], int tam, float* prom);
+void Calculos(int edades[], int sueldo[], int tam, float* prom, float* promS);
 
-void Ordenar(int edades[], int tam);
+void Ordenar(int edades[], int sueldo[], int tam);
 
 #endif /* MENUOPCIONES_H_ */

@@ -15,7 +15,10 @@ int main(void) {
 
 	int opcion;
 	int edades[TAM];
+	int sueldo[TAM];
+	char nombres[TAM][25];
 	float promedio;
+	float promedioSueldo;
 
 
 	do {
@@ -23,28 +26,28 @@ int main(void) {
 
 		switch (opcion) {
 			case 1:
-				Inicializar(edades, TAM);
+				Inicializar(edades, sueldo, TAM);
 				printf("\nFuncion inicializada...\n");
 				printf("\n");
 			break;
 			case 2:
-				Cargar(edades, TAM);
+				Cargar(edades, sueldo, nombres, TAM);
 				printf("\n");
 			break;
 			case 3:
-			    MostrarTodos(edades, TAM);
+			    MostrarTodos(edades, sueldo,TAM);
 				printf("\n");
 				printf("\n");
 			break;
 			case 4:
-				Calculos(edades, TAM, &promedio);
-				printf("\nEl promedio de las edades es: %.2f", promedio);
+				Calculos(edades, sueldo, TAM, &promedio, &promedioSueldo);
+				printf("\nEl promedio de las edades es: %.2f y el promedio de sueldos es: %.2f", promedio, promedioSueldo);
 				printf("\n");
 				printf("\n");
 			break;
 			case 5:
-				Ordenar(edades, TAM);
-				MostrarTodos(edades, TAM);
+				Ordenar(edades, sueldo,TAM);
+				MostrarTodos(edades, sueldo,TAM);
 				printf("\n");
 				printf("\n");
 			break;
