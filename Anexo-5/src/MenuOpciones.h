@@ -9,19 +9,27 @@
 #define MENUOPCIONES_H_
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
+typedef struct {
+	int legajo;
+    char nombre[25];
+    int edad;
+    int sueldo;
+}datos;
 
 int MenuOpciones();
 
-void Inicializar(int edades[], int sueldo[], int tam);
+void Inicializar(datos pers[], int tam);
 
-void Cargar(int edades[], int sueldo[], char nombres[][20], int tam);
+void Cargar(datos pers[], int tam);
 
-void MostrarTodos(int edades[], int sueldo[], int tam);
+void MostrarTodos(datos pers[], int tam);
 
-void MostrarIndividual(int edad, int sueldo);
+void MostrarIndividual(char elemNom, int elemEdad, int elemSue, int elemLeg);
 
-void Calculos(int edades[], int sueldo[], int tam, float* prom, float* promS);
+void Calculos(datos pers[], int tam, float* prom);
 
-void Ordenar(int edades[], int sueldo[], int tam);
+void Ordenar(datos pers[], int tam);
 
 #endif /* MENUOPCIONES_H_ */

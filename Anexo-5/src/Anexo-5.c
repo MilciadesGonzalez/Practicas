@@ -10,15 +10,14 @@
 #include "MenuOpciones.h"
 #define TAM 5
 
+
+
 int main(void) {
 	setbuf(stdout,NULL);
 
 	int opcion;
-	int edades[TAM];
-	int sueldo[TAM];
-	char nombres[TAM][25];
+	datos personas[TAM];
 	float promedio;
-	float promedioSueldo;
 
 
 	do {
@@ -26,28 +25,27 @@ int main(void) {
 
 		switch (opcion) {
 			case 1:
-				Inicializar(edades, sueldo, TAM);
-				printf("\nFuncion inicializada...\n");
-				printf("\n");
+				Inicializar(personas, TAM);
+				printf("\nNueva lista inicializada...\n");
 			break;
 			case 2:
-				Cargar(edades, sueldo, nombres, TAM);
+				Cargar(personas, TAM);
 				printf("\n");
 			break;
 			case 3:
-			    MostrarTodos(edades, sueldo,TAM);
+			    MostrarTodos(personas,TAM);
 				printf("\n");
 				printf("\n");
 			break;
 			case 4:
-				Calculos(edades, sueldo, TAM, &promedio, &promedioSueldo);
-				printf("\nEl promedio de las edades es: %.2f y el promedio de sueldos es: %.2f", promedio, promedioSueldo);
+				Calculos(personas, TAM, &promedio);
+				printf("\nEl promedio de las edades es: %.2f", promedio);
 				printf("\n");
 				printf("\n");
 			break;
 			case 5:
-				Ordenar(edades, sueldo,TAM);
-				MostrarTodos(edades, sueldo,TAM);
+				Ordenar(personas,TAM);
+				MostrarTodos(personas,TAM);
 				printf("\n");
 				printf("\n");
 			break;

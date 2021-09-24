@@ -15,96 +15,96 @@ int MenuOpciones(){
 		printf("4-Calcular Promedio\n");
 		printf("5-Ordenar\n");
 		printf("6-Salir\n");
-		printf("\nSelecione una opción: ");
-		scanf("%d\n", &opcion);
+		printf("\nSelecione una opcion: ");
+		scanf("%d", &opcion);
+		printf("\n");
 
 	return opcion;
 }
-void Inicializar(int edades[], int sueldo[], int tam){
-
+    void Inicializar(datos pers[], int tam){
     for(int i=0; i<tam;i++){
-        edades[i] = 0;
-        sueldo[i] = 0;
+        pers[i].edad = 0;
+        pers[i].sueldo = 0;
+        strcpy(pers[i].nombre,"");
     }
 }
-void Cargar(int edades[], int sueldo[], char nombres[][25], int tam){
+void Cargar(datos pers[], int tam){
 
     char rta;
     int edadIngresada;
     int posicion;
-    int sueldoIngresado;
+    char nombre[20];
+    int sueldo;
+    int legajo;
 
 
     do {
-    	printf("Ingrese nombre: ");
-    	//fflush(nombres[posicion-1][25]);
-    	scanf("%[^\n]",&nombres[posicion-1][25]);
+        printf("Ingrese nombre: ");
+        fflush(stdin);
+        scanf("%s",&nombre);
         printf("Ingrese edad: ");
-        scanf("%d\n", &edadIngresada);
+        scanf("%d", &edadIngresada);
         printf("Ingrese sueldo: ");
-        scanf("%d\n", &sueldoIngresado);
+        scanf("%d", &sueldo);
+        printf("Ingrese legajo: ");
+        scanf("%d", &legajo);
         printf("Ingrese la posición para guardar(1 al 5): ");
-        scanf("%d\n", &posicion);
+        scanf("%d", &posicion);
 
 
         for(int i=0; i<tam; i++){
-            edades[posicion-1] = edadIngresada;
-            sueldo[posicion-1] = sueldoIngresado;
+        	strcpy(pers[posicion-1].nombre,nombre);
+            pers[posicion-1].edad = edadIngresada;
+            pers[posicion-1].sueldo = sueldo;
+            pers[posicion-1].legajo = legajo;
         }
         printf("\nQuiere seguir ingresando? s/n ");
         fflush(stdin);
-        scanf("%c\n", &rta);
+        scanf("%c", &rta);
 
 	} while (rta == 's');
 }
-void MostrarTodos(int edades[], int sueldo[], int tam){
-	printf("Edades: \t Sueldos:");
+void MostrarTodos(datos pers[], int tam){
+	printf("Nombre:\tEdad:\tSueldo:\tLegajo:");
     for(int i=0; i<tam; i++){
-        if(edades[i] > 0){
-            MostrarIndividual(edades[i], sueldo[i]);
+        if(pers[i].edad > 0){
+            printf("\n%s \t %d \t %d \t %d", pers[i].nombre,pers[i].edad,pers[i].sueldo,pers[i].legajo);
         }
 
     }
 }
-void MostrarIndividual(int elemEdad, int elemSueldo){
-	printf("\n%d\t%d\n", elemEdad, elemSueldo);
-
+void MostrarIndividual(char elemNom, int elemEdad, int elemSue, int elemLeg){
+	printf("\n%c", elemNom);
+	printf("\n%d", elemEdad);
+	printf("\n%d", elemSue);
+	printf("\n%d", elemLeg);
 }
-void Calculos(int edades[], int sueldo[], int tam, float* prom, float* promS){
-
+void Calculos(datos pers[], int tam, float* prom){
     int acumulador;
-    float acumS;
     int contador;
 
     acumulador = 0;
-    acumS = 0;
     contador = 0;
 
     for(int i=0; i<tam; i++){
-    	if(edades[i]>0){
-    		acumulador += edades[i];
-    		acumS += sueldo[i];
+    	if(pers[i].edad>0){
+    		acumulador += pers[i].edad;
     		contador++;
     	}
     }
     *prom = (float)acumulador / contador;
-    *promS = (float)acumS / contador;
 }
-void Ordenar(int edades[], int sueldo[], int tam){
-	int aux;
-	int auxS;
+void Ordenar(datos pers[], int tam){
+	datos aux;
 	for(int i=0; i<tam-1; i++){
 		for(int j=i+1; j<tam; j++){
-			if(edades[i]>edades[j]){
-				aux = edades[i];
-				edades[i] = edades[j];
-				edades[j] = aux;
-
-				auxS = sueldo[i];
-				sueldo[i] = sueldo[j];
-				sueldo[j] = auxS;
+			if(pers[i].edad>pers[j].edad){
+				aux = pers[i];
+				pers[i] = pers[j];
+				pers[j] = aux;
 			}
 		}
 	}
 }
+
 
