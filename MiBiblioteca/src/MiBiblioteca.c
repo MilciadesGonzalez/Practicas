@@ -6,148 +6,186 @@
  */
 #include "MiBiblioteca.h"
 
-int MenuPrincipal(int opcion, int op1, int op2){
+int pedirEntero(char msje[])
+{
+	int num;
 
-	printf("1. Ingresar 1er operando A = %d\n", op1);
-	printf("2. Ingresar 2do operando B = %d\n", op2);
-	printf("3. Calcular todas las operaciones.\n");
-	printf("4. Resultados\n");
-	printf("5. Salir\n");
-	printf("\nElija una opción: ");
-	scanf("%d", &opcion);
-
-	return opcion;
-}
-
-int IngresarNumero(int numero){
-	printf("\nIngrese número: ");
-	scanf("%d", &numero);
-
-	return numero;
-}
-
-void MenuCalculos(int op1, int op2){
-	printf("\na) Calcular la suma de (%d+%d)", op1, op2);
-	printf("\nb) Calcular la resta de (%d-%d)", op1, op2);
-	if(op1==0 || op2==0){
-		printf("\nNo es posible dividir por cero");
-	}else{
-		printf("\nc) Calcular la division de (%d/%d)", op1, op2);
-	}
-	if(op1==0 || op2==0){
-		printf("\nNo es posible multiplicar por cero");
-	}else{
-		printf("\nd) Calcular la multiplicacion de (%d*%d)", op1, op2);
-	}
-	printf("\ne) Calcular el factorial de (!%d) y de (!%d)", op1, op2);
-	printf("\n");
-
-}
-
-void Calcular(int op1, int op2, int* suma, int* resta, float* div, int* mult, int* fact1, int* fact2){
-
-	int res1 = 1;
-	int res2 = 1;
-
-	*suma = op1 + op2;
-	*resta = op1 - op2;
-	*div = (float)op1 / op2;
-	*mult = op1 * op2;
-
-	for(int i=1; i<=op1; i++){
-		res1 = res1 * i;
-	}
-	*fact1 = res1;
-	for(int i=1; i<=op2; i++){
-		res2 = res2 * i;
-	}
-	*fact2 = res2;
-}
-
-void MostrarResultados(int op1, int op2, int suma, int resta, float div, int mult, int fact1, int fact2){
-
-	printf("\na) El resultado de (%d+%d) es: %d", op1, op2, suma);
-	printf("\nb) El resultado de (%d-%d) es: %d", op1, op2, resta);
-	printf("\nc) El resultado de (%d/%d) es: %.2f", op1, op2, div);
-	printf("\nd) El resultado de (%d*%d) es: %d", op1, op2, mult);
-	printf("\ne) El factorial de (!%d) es: %d y El factorial de (!%d) es: %d", op1, fact1, op2, fact2);
-	printf("\n");
-}
-
-void ordenarArrayCreciente(int num[], int tam){
-	int aux;
-	for(int i=0; i<tam-1; i++){
-	    for(int j=i+1;j<tam;j++){
-	        if(num[i]>num[j]){
-	           aux = num[i];
-	           num[i] = num[j];
-	           num[j] = aux;
-	         }
-	     }
-	}
-}
-
-void ordenarArrayDecreciente(int num[], int tam){
-	int aux;
-	for(int i=0; i<tam-1; i++){
-	    for(int j=i+1;j<tam;j++){
-	        if(num[i]<num[j]){
-	           aux = num[i];
-	           num[i] = num[j];
-	           num[j] = aux;
-	         }
-	     }
-	}
-}
-
-void CargarArraySecuencial(int numeros[], int tam){
-	for(int i=0; i<tam; i++){
-	    printf("Ingrese numero: ");
-	    scanf("%d", &numeros[i]);
-	}
-}
-
-void CargarArrayAleatoria(int numeros[], int tam){
-	int indice;
-
-	for(int i=0; i<tam; i++){
-		printf("Ingrese posición para guardar el número: ");
-		scanf("%d", indice);
-
-	    printf("\nIngrese el número: ");
-	    scanf("%d", &numeros[indice]);
-	}
-}
-
-void CargarArraySepararPosNeg(int numeros[], int tam, int positivos[], int negativos[]){
-	for(int i=0; i<tam; i++){
-	    printf("Ingrese numero: ");
-	    scanf("%d", &numeros[i]);
-	    if(numeros[i]>0){
-	       positivos[i] = numeros[i];
-	    }else{
-	        negativos[i] = numeros[i];
-	    }
-	}
-}
-
-void MostrarElemArray(int num[], int tam){
-	printf("Numeros ingresados: \n");
-	for(int i=0;i<tam; i++){
-		if(num[i]!=0){
-			MostrarIndividual(num[i]);
-		}
-	}
-}
-
-int MostrarIndividual(int num){
-	printf("\n%d", num);
+	printf("%s", msje);
+	scanf("%d", &num);
 
 	return num;
 }
+float pedirFlotante(char msje[])
+{
+	float num;
 
-void InicializarArray(int numeros[], int tam){
+	printf("%s", msje);
+	scanf("%f", &num);
+
+	return num;
+}
+char pedirCaracter(char msje[])
+{
+	char texto;
+
+	printf("%s", msje);
+	scanf("%c", &texto);
+
+	return texto;
+}
+void pedirString(char mensaje[],char cadena[],int tam)
+{
+    char auxiliar[tam];
+    printf("%s", mensaje);
+    fflush(stdin);
+    scanf("%[^\n]", auxiliar);
+    strcpy(cadena, auxiliar);
+
+}
+int sumaEntero(int numeroUno, int numeroDos){
+	int resultado;
+
+	resultado = numeroUno + numeroDos;
+
+	return resultado;
+}
+int restaEntero(int numeroUno, int numeroDos){
+	int resultado;
+
+	resultado = numeroUno - numeroDos;
+
+	return resultado;
+}
+int divisionEntero(int numeroUno, int numeroDos){
+	int resultado;
+
+	resultado = numeroUno / numeroDos;
+
+	return resultado;
+}
+int multiplicacionEntero(int numeroUno, int numeroDos){
+	int resultado;
+
+	resultado = numeroUno * numeroDos;
+
+	return resultado;
+}
+int factorialEntero(int numero){
+	int resultado;
+
+	resultado = 1;
+
+	for(int i=1; i<=numero; i++)
+	{
+		resultado = resultado * i;
+	}
+
+	return resultado;
+}
+void mostrarEntero(char mensaje[], int numero){
+	printf("%s %d\n",mensaje, numero);
+}
+void CargarArrayEnteroSecuencial(int numeros[], int tam, char mensaje){
+	for(int i=0; i<tam; i++){
+	    printf(mensaje);
+	    scanf("%d", &numeros[i]);
+	}
+}
+void InicializarArrayEnCero(int numeros[], int tam){
 	for(int i=0; i<tam; i++){
 		numeros[i] = 0;
 	}
+}
+void MostrarTodosElementosArrayEnteros(int num[], int tam){
+	for(int i=0; i<tam; i++){
+		printf("%d\n", num[i]);
+	}
+}
+void validarIngresoArrayEntero(int num[], int tam, int min, int max){
+	for(int i=0; i<tam; i++){
+		while(num[i]<min || num[i]>max){
+			printf("Rango invalido. Reingrese numero: ");
+			scanf("%d", &num[i]);
+		}
+	}
+}
+void ordenarArrayCreciente(int num[], int tam){
+	int aux;
+	printf("Orden creciente:\n");
+	for(int i=0; i<tam-1; i++){
+		for(int j=i+1; j<tam; j++){
+			if(num[i]>num[j]){
+				aux = num[i];
+				num[j] = num[i];
+				num[j] = aux;
+			}
+		}
+	}
+}
+void MostrarNumerosParesArrayEntero(int num[], int tam){
+	printf("Los numeros pares ingresados son:\n");
+	for(int i=0; i<tam; i++){
+		if(num[i]%2==0){
+			printf("%d\n", num[i]);
+		}
+	}
+}
+void MostrarPosicionesImparesArrayEntero(int num[], int tam){
+	printf("Los numeros en los indices impares son:\n");
+	for(int i=0; i<tam; i++){
+		if(i%2!=0){
+			printf("%d\n", num[i]);
+		}
+	}
+}
+void NumerosRepetidosEnArray(int num[], int tam){
+	printf("Los numeros repetidos son:\n");
+	for(int i=0; i<tam-1; i++){
+		for(int j=i+1; j<tam; j++){
+			if(num[i]==num[j]){
+				printf("%d\n", num[i]);
+			}
+		}
+	}
+}
+int sumaParesArrayEntero(int num[], int tam, int* suma){
+	int sumaPar = 0;
+	int flag;
+	for(int i=0; i<tam; i++){
+		if(num[i]%2==0){
+			sumaPar += num[i];
+			flag = 1;
+		}else{
+			flag = 0;
+		}
+	}
+	*suma = sumaPar;
+	return flag;
+}
+int mayorImparArrayEntero(int num[], int tam, int* impar){
+	int flag = 0;
+	int nImpar;
+	for(int i=0; i<tam; i++){
+		if(num[i]%2!=0){
+			if(flag==0 || nImpar<num[i]){
+				nImpar = num[i];
+				flag = 1;
+			}
+		}
+	}
+	*impar = nImpar;
+	return flag;
+}
+void contarPosNegArrayEntero(int num[], int tam, int* contPos, int* contNeg){
+	int positivos = 0;
+	int negativos = 0;
+	for(int i=0; i<tam; i++){
+		if(num[i]>0){
+			positivos++;
+		}else if(num[i]<0){
+			negativos++;
+		}
+	}
+	*contPos = positivos;
+	*contNeg = negativos;
 }
