@@ -24,16 +24,17 @@ typedef struct{
 int MenuPrincipal();
 void Inicializar(eProducto listaProductos[], int tam);
 int pedirEntero(char msje[]);
-void CargarProducto(eProducto listaProductos[], int tam);
+int CargarProducto(eProducto listaProductos[], int tam);
 float pedirFlotante(char msje[]);
 void getString(char mensaje[],char cadena[],int tam);
 void mostrarUnProducto(eProducto unProducto);
 void mostrarProductos(eProducto listaProducto[], int tam);
-void bajaProducto(eProducto listaProductos[], int tam);
-void validacionBaja(int flag);
-void validacionModificacion(int flag);
-void modificacionProducto(eProducto listaProductos[], int tam);
-void ordenadoPrecio(eProducto listaProducto[], int tam);
-void ordenadoDescripcion(eProducto listaProducto[], int tam);
+int bajaProducto(eProducto listaProductos[], int tam);
+int modificacionProducto(eProducto listaProductos[], int tam, int opcion);
+int ordenarPorPrecio(eProducto listaProducto[], int tam);
+int ordenarPorDescripcion(eProducto listaProducto[], int tam);
+int subMenu();
+int productoMayorPrecio(eProducto listaProductos[], int tam, float* precioMayor);
+int mostrarProductoPorPrecio(eProducto listaProductos[], int tam, float precio);
 
 #endif /* BIBLIOTECA_H_ */

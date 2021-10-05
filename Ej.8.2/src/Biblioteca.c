@@ -18,7 +18,10 @@ int MenuPrincipal()
 	printf("4. LISTADO Productos.\n");
 	printf("5. LISTADO ordenado por precio.\n");
 	printf("6. LISTADO ordenado por descripción.\n");
-	printf("7. Salir\n");
+	printf("7. El/los  productos más caros.\n");
+	printf("8. Los productos que cuestan 700.\n");
+	printf("9. Precio promedio por tipo de producto.\n");
+	printf("10. Salir\n");
 	printf("\n");
 	printf("Ingrese una opcion: ");
 	scanf("%d", &op);
@@ -60,9 +63,10 @@ void getString(char mensaje[],char cadena[],int tam)
     strcpy(cadena, auxiliar);
 
 }
-void CargarProducto(eProducto listaProductos[], int tam)
+int CargarProducto(eProducto listaProductos[], int tam)
 {
-	int cont;
+	int flag;
+	flag = 0;
 	for(int i=0; i<tam; i++)
 	{
 		if(listaProductos[i].estado==LIBRE)
@@ -73,9 +77,12 @@ void CargarProducto(eProducto listaProductos[], int tam)
 			listaProductos[i].nacionalidad = pedirEntero("Ingrese nacionalidad del producto(1.EEUU 2.CHINA 3.OTRO): ");
 			listaProductos[i].precio = pedirFlotante("Ingrese precio del producto: ");
 			listaProductos[i].estado = 1;
+			flag = 1;
 			break;
+
 		}
 	}
+	return flag;
 }
 void mostrarProductos(eProducto listaProducto[], int tam)
 {
@@ -92,8 +99,12 @@ void mostrarUnProducto(eProducto unProducto)
 {
 	printf("%d\t%4d\t%-20s%-4d\t%4.2f\n",unProducto.idProducto, unProducto.tipo, unProducto.descripcion, unProducto.nacionalidad, unProducto.precio);
 }
-void bajaProducto(eProducto listaProductos[], int tam)
+int bajaProducto(eProducto listaProductos[], int tam)
 {
+
+	mostrarProductos(listaProductos, tam);
+	printf("\n");
+
 	int opcion;
 	int flag;
 
@@ -107,64 +118,60 @@ void bajaProducto(eProducto listaProductos[], int tam)
 		{
 			listaProductos[i].estado = 0;
 			flag = 1;
+			break;
 		}
 
 	}
-	validacionBaja(flag);
+	return flag;
 }
-void validacionBaja(int flag)
+int subMenu()
 {
-	if(flag==1)
-		{
-			printf("\nEl producto ha sido eliminado.\n");
-		}
-		else
-		{
-			printf("\nEl producto no existe.\n");
-		}
+	int op;
+
+	printf("1. Modificar tipo de producto.\n");
+	printf("2. Modificar precio de producto.\n");
+	printf("\n");
+	printf("Ingrese opcion: ");
+	scanf("%d", &op);
+	printf("\n");
+
+	return op;
 }
-void modificacionProducto(eProducto listaProductos[], int tam)
+int modificacionProducto(eProducto listaProductos[], int tam, int opcion)
 {
-	int opcion;
-	int op1;
 	int flag;
+	int idProd;
+
+	mostrarProductos(listaProductos, tam);
+	printf("\n");
+	printf("Ingrese Id del producto a modificar: ");
+	scanf("%d",&idProd);
 
 	flag = 0;
 
-	opcion = pedirEntero("Ingrese ID de producto a modificar: ");
-
 	for(int i=0; i<tam; i++)
 	{
-		if(listaProductos[i].idProducto==opcion)
+		if(listaProductos[i].idProducto==idProd)
 		{
-			op1 = pedirEntero("Ingrese 1 para modificar el tipo o 2 para modificar el precio: ");
-			if(op1==1)
+			switch(opcion)
 			{
-				listaProductos[i].tipo = pedirEntero("Ingrese nuevo tipo del producto(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
-				flag = 1;
-			}
-			else if(op1==2)
-			{
-				listaProductos[i].precio = pedirFlotante("Ingrese nuevo precio del producto: ");
-				flag = 1;
+				case 1:
+					listaProductos[i].tipo = pedirEntero("Ingrese nuevo tipo del producto(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
+					flag = 1;
+				break;
+				case 2:
+					listaProductos[i].precio = pedirFlotante("Ingrese nuevo precio del producto: ");
+					flag = 1;
+				break;
 			}
 		}
 	}
-	validacionModificacion(flag);
+	return flag;
 }
-void validacionModificacion(int flag)
+int ordenarPorPrecio(eProducto listaProducto[], int tam)
 {
-	if(flag==1)
-		{
-			printf("\nEl producto ha sido modificado.\n");
-		}
-		else
-		{
-			printf("\nEl producto no existe.\n");
-		}
-}
-void ordenadoPrecio(eProducto listaProducto[], int tam)
-{
+	int flag;
+	flag = 0;
 	eProducto aux[tam];
 
 	for(int i=0; i<tam-1; i++)
@@ -176,12 +183,16 @@ void ordenadoPrecio(eProducto listaProducto[], int tam)
 				aux[i] = listaProducto[i];
 				listaProducto[i] = listaProducto[j];
 				listaProducto[j] = aux[i];
+				flag = 1;
 			}
 		}
 	}
+	return flag;
 }
-void ordenadoDescripcion(eProducto listaProducto[], int tam)
+int ordenarPorDescripcion(eProducto listaProducto[], int tam)
 {
+	int flag;
+	flag = 0;
 	eProducto aux[tam];
 
 	for(int i=0; i<tam-1; i++)
@@ -193,7 +204,46 @@ void ordenadoDescripcion(eProducto listaProducto[], int tam)
 				aux[i] = listaProducto[i];
 				listaProducto[i] = listaProducto[j];
 				listaProducto[j] = aux[i];
+				flag = 1;
 			}
 		}
 	}
+	return flag;
+}
+int productoMayorPrecio(eProducto listaProductos[], int tam, float* precioMayor)
+{
+	float maxPrecio;
+	int flag;
+
+	flag = 0;
+
+	for(int i=0; i<tam; i++)
+	{
+		if(listaProductos[i].estado==OCUPADO)
+		{
+			if(flag==0 || maxPrecio<listaProductos[i].precio)
+			{
+				maxPrecio = listaProductos[i].precio;
+				flag = 1;
+			}
+		}
+	}
+	*precioMayor = maxPrecio;
+	return flag;
+}
+int mostrarProductoPorPrecio(eProducto listaProductos[], int tam, float precio)
+{
+	int flag;
+
+	flag = 0;
+	printf("ID \t Tipo \t Descripcion \t Nacionalidad \t Precio\n");
+	for(int i=0; i<tam; i++)
+	{
+		if(listaProductos[i].estado==OCUPADO && listaProductos[i].precio==precio)
+		{
+			mostrarUnProducto(listaProductos[i]);
+			flag = 1;
+		}
+	}
+	return flag;
 }

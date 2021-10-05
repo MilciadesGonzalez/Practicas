@@ -2,20 +2,9 @@
  ============================================================================
 Milciades Gonzalez
 
-Ejercicio 8-2:
-Una empresa importadora que comercializa productos Apple, decide registrar de sus productos los siguientes datos:
-idProducto (numerico)
-descripcion (alfanumérico)
-nacionalidad (numérico, por el momento utilizaremos un define: EEUU - CHINA - OTRO)
-tipo (numérico, por el momento utilizaremos un define: IPHONE -MAC - IPAD - ACCESORIOS)
-precio (numérico decimal)
-Realizar un programa que permita interactuar con un menú de usuarios con las siguientes opciones:
-ALTA Producto: Se ingresan los datos de UN solo producto. Siempre y cuando haya espacio disponible en el array.
-BAJA Producto: A partir del ingreso del ID. Si existe el producto desaparece de la lista, dejando espacio disponible para un nuevo producto.
-MODIFICACIÓN Producto: A partir del ingreso del ID. Si existe se podrá modificar el precio o el tipo.
-LISTADO Productos.
-LISTADO ordenado por precio.
-LISTADO ordenado por descripción.
+Ejercicio 8-2: Listo
+Ejercicio 9.1:
+
  ============================================================================
  */
 
@@ -38,23 +27,46 @@ int main(void) {
 	setbuf(stdout,NULL);
 
 	int opcion;
-	eProducto listaProductos[TAM];
-	Inicializar(listaProductos, TAM);
+	int opcion2;
+	float precioMayor;
+	eProducto listaProductos[TAM] = {{1,10,"Cargador",2,4,15},{1,11,"Iphone X",1,1,700},{1,12,"Mac Air",2,3,700},
+									{1,13,"Ipad Super",1,1,500},{1,14,"Funda",2,4,15}};
+	//Inicializar(listaProductos, TAM);
 
 	do{
 		opcion = MenuPrincipal();
 
 		switch (opcion){
 			case 1:
-					CargarProducto(listaProductos, TAM);
+					if(CargarProducto(listaProductos, TAM)==0)
+					{
+						printf("Todas las posiciones estan ocupadas.");
+					}
 					printf("\n");
 			break;
 			case 2:
-					bajaProducto(listaProductos, TAM);
+					if(bajaProducto(listaProductos, TAM)==1)
+					{
+						printf("\nEl producto ha sido eliminado.\n");
+						mostrarProductos(listaProductos, TAM);
+					}
+					else
+					{
+						printf("\nEl producto no existe.\n");
+					}
 					printf("\n");
 			break;
 			case 3:
-					modificacionProducto(listaProductos, TAM);
+					opcion2 = subMenu();
+					if(modificacionProducto(listaProductos, TAM, opcion2)==1)
+					{
+						printf("\nEl producto ha sido modificado.\n");
+						mostrarProductos(listaProductos, TAM);
+					}
+					else
+					{
+						printf("\nNo se realizó ninguna modificacion.\n");
+					}
 					printf("\n");
 			break;
 			case 4:
@@ -62,23 +74,55 @@ int main(void) {
 					printf("\n");
 			break;
 			case 5:
-					ordenadoPrecio(listaProductos, TAM);
-					mostrarProductos(listaProductos, TAM);
+					if(ordenarPorPrecio(listaProductos, TAM)==1)
+					{
+						mostrarProductos(listaProductos, TAM);
+					}
+					else
+					{
+						printf("Los productos ya estan ordenados por precio.\n");
+					}
 					printf("\n");
 			break;
 			case 6:
-					ordenadoDescripcion(listaProductos, TAM);
-					mostrarProductos(listaProductos, TAM);
+					if(ordenarPorDescripcion(listaProductos, TAM)==1)
+					{
+						mostrarProductos(listaProductos, TAM);
+					}
+					else
+					{
+						printf("Los productos ya estan ordenados por descripcion.\n");
+					}
 					printf("\n");
 			break;
 			case 7:
+					if(productoMayorPrecio(listaProductos, TAM, &precioMayor)==1)
+					{
+						mostrarProductoPorPrecio(listaProductos, TAM, precioMayor);
+					}
+					else
+					{
+						printf("No hay productos cargados.\n");
+					}
+					printf("\n");
+			break;
+			case 8:
+					if(mostrarProductoPorPrecio(listaProductos, TAM, 700)==0)
+					{
+						printf("No hay productos con precio 700.\n");
+					}
+					printf("\n");
+			break;
+			case 9:
+			break;
+			case 10:
 					printf("Gracias por utilizar la app.");
 			break;
 			default:
 					printf("Opcion invalida.");
 			break;
 		}
-	}while(opcion != 7);
+	}while(opcion != 10);
 
 
 
