@@ -29,8 +29,21 @@ int main(void) {
 	int opcion;
 	int opcion2;
 	float precioMayor;
-	eProducto listaProductos[TAM] = {{1,10,"Cargador",2,4,15},{1,11,"Iphone X",1,1,700},{1,12,"Mac Air",2,3,700},
-									{1,13,"Ipad Super",1,1,500},{1,14,"Funda",2,4,15}};
+	eTipoProducto listaDeTipos[4] =
+	{
+			{1,"IPHONE"},
+			{2,"MAC"},
+			{3,"IPAD"},
+			{4,"ACCESORIOS"},
+	};
+	eProducto listaProductos[TAM] =
+	{
+			{1,1,"Cargador",2,4,15},
+			{1,2,"Iphone X",1,1,700},
+			{1,3,"Mac Air",2,3,700},
+			{1,4,"Ipad Super",1,1,500}
+	};
+
 	//Inicializar(listaProductos, TAM);
 
 	do{
@@ -38,7 +51,7 @@ int main(void) {
 
 		switch (opcion){
 			case 1:
-					if(CargarProducto(listaProductos, TAM)==0)
+					if(CargarProducto(listaProductos, listaDeTipos, TAM)==0)
 					{
 						printf("Todas las posiciones estan ocupadas.");
 					}

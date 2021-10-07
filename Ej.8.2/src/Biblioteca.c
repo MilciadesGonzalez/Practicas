@@ -63,16 +63,25 @@ void getString(char mensaje[],char cadena[],int tam)
     strcpy(cadena, auxiliar);
 
 }
-int CargarProducto(eProducto listaProductos[], int tam)
+int CargarProducto(eProducto listaProductos[], eTipoProducto listaTipos[],int tam)
 {
 	int flag;
+	int tipo;
+	int validacionTipo;
 	flag = 0;
 	for(int i=0; i<tam; i++)
 	{
 		if(listaProductos[i].estado==LIBRE)
 		{
 			listaProductos[i].idProducto = pedirEntero("Ingrese Id del producto: ");
-			listaProductos[i].tipo = pedirEntero("Ingrese  el tipo(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
+			tipo = pedirEntero("Ingrese  el tipo(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
+			validacionTipo = validarPorTipo(tipo, listaTipos, tam);
+			while(validacionTipo==0)
+			{
+				tipo = pedirEntero("Tipo invalido. Reingrese  el tipo(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
+				validacionTipo = validarPorTipo(tipo, listaTipos, tam);
+			}
+			listaProductos[i].idTipoProducto = tipo;
 			getString("Ingrese descripcion del producto: ", listaProductos[i].descripcion, 50);
 			listaProductos[i].nacionalidad = pedirEntero("Ingrese nacionalidad del producto(1.EEUU 2.CHINA 3.OTRO): ");
 			listaProductos[i].precio = pedirFlotante("Ingrese precio del producto: ");
@@ -97,7 +106,7 @@ void mostrarProductos(eProducto listaProducto[], int tam)
 }
 void mostrarUnProducto(eProducto unProducto)
 {
-	printf("%d\t%4d\t%-20s%-4d\t%4.2f\n",unProducto.idProducto, unProducto.tipo, unProducto.descripcion, unProducto.nacionalidad, unProducto.precio);
+	printf("%d\t%4d\t%-20s%-4d\t%4.2f\n",unProducto.idProducto, unProducto.idTipoProducto, unProducto.descripcion, unProducto.nacionalidad, unProducto.precio);
 }
 int bajaProducto(eProducto listaProductos[], int tam)
 {
@@ -156,7 +165,7 @@ int modificacionProducto(eProducto listaProductos[], int tam, int opcion)
 			switch(opcion)
 			{
 				case 1:
-					listaProductos[i].tipo = pedirEntero("Ingrese nuevo tipo del producto(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
+					listaProductos[i].idTipoProducto = pedirEntero("Ingrese nuevo tipo del producto(1.IPHONE 2.MAC 3.IPAD 4.ACCESORIOS): ");
 					flag = 1;
 				break;
 				case 2:
@@ -242,6 +251,19 @@ int mostrarProductoPorPrecio(eProducto listaProductos[], int tam, float precio)
 		if(listaProductos[i].estado==OCUPADO && listaProductos[i].precio==precio)
 		{
 			mostrarUnProducto(listaProductos[i]);
+			flag = 1;
+		}
+	}
+	return flag;
+}
+int validarPorTipo(int tipo, eTipoProducto listaTipos[], int tam)
+{
+	int flag;
+	flag = 0;
+	for(int i=0; i<tam; i++)
+	{
+		if(tipo==listaTipos[i].idTipoProducto)
+		{
 			flag = 1;
 		}
 	}
