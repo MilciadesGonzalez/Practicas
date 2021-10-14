@@ -13,11 +13,11 @@
 #include <string.h>
 
 typedef struct{
-	int estado;
-	int idProducto;
-	char descripcion[50];
-	int nacionalidad;
-	int idTipoProducto;
+	int estado;				//ok
+	int idProducto;			//ok
+	char descripcion[50];	//ok
+	int nacionalidad;		//ok
+	int tipo;				//ok
 	float precio;
 }eProducto;
 
@@ -26,10 +26,16 @@ typedef struct{
 	char descripcionTipo[50];
 }eTipoProducto;
 
+typedef struct{
+	int idNacProducto;
+	char descripcionNac[50];
+}eNacionalidadProducto;
+
+
 int MenuPrincipal();
 void Inicializar(eProducto listaProductos[], int tam);
 int pedirEntero(char msje[]);
-int CargarProducto(eProducto listaProductos[], eTipoProducto listaTipos[],int tam);
+int CargarProducto(eProducto[],int,eTipoProducto[],int,eNacionalidadProducto[],int);
 float pedirFlotante(char msje[]);
 void getString(char mensaje[],char cadena[],int tam);
 void mostrarUnProducto(eProducto unProducto);
@@ -42,5 +48,11 @@ int subMenu();
 int productoMayorPrecio(eProducto listaProductos[], int tam, float* precioMayor);
 int mostrarProductoPorPrecio(eProducto listaProductos[], int tam, float precio);
 int validarPorTipo(int tipo, eTipoProducto listaTipos[], int tam);
+int validarEntero(char entero[]);
+int mostrarProductoPorTipo(eProducto listaProductos[], int tamListaProductos, eTipoProducto listaTipos[], int tamListaTipos);
+void mostrarTipos(eTipoProducto lista[], int tam);
+void mostrarNacionalidades(eNacionalidadProducto lista[], int tam);
+int validarPorNac(int tipo, eNacionalidadProducto lista[], int tam);
+
 
 #endif /* BIBLIOTECA_H_ */
