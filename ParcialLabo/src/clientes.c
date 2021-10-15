@@ -1,10 +1,4 @@
-/*
- * structClients.c
- *
- *  Created on: 11 oct. 2021
- *      Author: Milciades Gonzalez
- */
-#include "structClients.h"
+#include "clientes.h"
 #include "inputs.h"
 #define TRUE 0
 #define FALSE 1
@@ -136,3 +130,5 @@ void harcodearCliente(eClientes lista[], int id, char empresa[], char cuit[], ch
 		strcpy(lista[id].direccion, direccion);
 		strcpy(lista[id].localidad, localidad);
 }
+
+

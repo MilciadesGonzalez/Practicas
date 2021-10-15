@@ -1,14 +1,8 @@
-/*
- * MiBiblioteca.h
- *
- *  Created on: 7 sep. 2021
- *      Author: Milciades Gonzalez
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <string.h>
 
 /** \brief Esta funcion pide un entero y lo devuelve
  *
@@ -117,20 +111,24 @@ int getValidFloat(float* numero, char* mensaje);
  *
  */
 float getFloat(char mensaje[]);
-/** \brief Esta funcion valida que el valor entero ingresado sea uno de dos valores enteros posibles
- *
- * \param mensaje char* el mensaje de ingreso
- * \param primerEstado int el primer valor entero posible
- * \param segundoEstado int el segundo valor entero posible
- * \return int devuelve el valor entero ingresado, luego de haber sido validado
- *
- */
-int getDosEstados(char* mensaje, int primerEstado, int segundoEstado);
-void getStringSinVal(char mensaje[], char cadena[]);
-float pedirFlotante(char msje[]);
 /** \brief Esta funcion pide el ingreso de string sin validar
  *
  * \param cadena[] char La cadena a guardar
  *
  *
  */
+void getStringSinVal(char mensaje[], char cadena[]);
+/// @fn int MenuPrincipal()
+/// @brief Esta funcion muestra un menu y pide ingresar una opcion.
+/// @return retorna la opcion ingresada.
+int MenuPrincipal();
+/// @fn int subMenu()
+/// @brief Esta funcion muestra un menu y pide ingresar una opcion.
+/// @return retorna la opcion ingresada.
+int subMenu();
+/// @fn int subMenuTipo()
+/// @brief Esta funcion muestra un menu y pide ingresar una opcion.
+/// @return retorna la opcion ingresada.
+int subMenuTipo();
+
+

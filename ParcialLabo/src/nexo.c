@@ -1,25 +1,9 @@
-/*
- * nexo.c
- *
- *  Created on: 11 oct. 2021
- *      Author: Milciades Gonzalez
- */
 #include "nexo.h"
 #define PENDIENTE 0
 #define COMPLETADO 1
 #define TRUE 0
 #define FALSE 1
 
-
-void InicializarAuxPed(ePedidos lista[], int tam, eAuxPedido* auxPed)
-{
-	for(int i=0; i<tam; i++)
-	{
-		auxPed[i].contador = 0;
-		auxPed[i].acumulador = 0;
-		auxPed[i].id = lista[i].idCliente;
-	}
-}
 int CrearPedido(eClientes listaC[], int tamC, ePedidos listaP[], int tamP, int idPed)
 {
 	int flag;
@@ -30,7 +14,7 @@ int CrearPedido(eClientes listaC[], int tamC, ePedidos listaP[], int tamP, int i
 	idCli = getInt("Ingrese ID del cliente para crear pedido: ");
 	for(int i=0; i<tamP; i++)
 	{
-		if (listaP[i].isEmpty == TRUE && validarArray(listaC, tamC, listaP, tamP, idCli) == 1)
+		if (listaP[i].isEmpty == TRUE && validarArray(listaC, tamC, idCli) == 1)
 		{
 			listaP[i].idPedido = idPed;
 			listaP[i].kilosTotales = getFloat("Ingrese kilos totales: ");
@@ -45,10 +29,26 @@ int CrearPedido(eClientes listaC[], int tamC, ePedidos listaP[], int tamP, int i
 	}
 	return flag;
 }
-int imprimirListaclientes(eClientes listaC[], int tamC, ePedidos listaP[], int tamP)
+int validarArray(eClientes listaC[], int tamC, int idCli)
 {
 	int flag;
-	eAuxPedido aux[tamP];
+	flag = 0;
+
+	for(int i=0; i<tamC; i++)
+	{
+		if(listaC[i].idCliente==idCli)
+		{
+			flag = 1;
+		}
+	}
+
+
+	return flag;
+}
+int imprimirClientesConPedidos(eClientes listaC[], int tamC, ePedidos listaP[], int tamP)
+{
+ 	int flag;
+ 	eAuxPedido aux[tamP];
 	InicializarAuxPed(listaP, tamP, aux);
 	flag = 0;
 
@@ -59,7 +59,7 @@ int imprimirListaclientes(eClientes listaC[], int tamC, ePedidos listaP[], int t
 		{
 			if(listaC[i].isEmpty==FALSE && listaC[i].idCliente==listaP[j].idCliente && listaP[j].estado==PENDIENTE)
 			{
-				contarCliente(listaP, tamP, aux);
+				recorrer(listaP, tamP, aux);
 				printf("%-8d %-20s %-20s %-20s %-20s %d\n", listaC[i].idCliente,
 															listaC[i].nombreEmpresa,
 															listaC[i].cuit,
@@ -71,8 +71,37 @@ int imprimirListaclientes(eClientes listaC[], int tamC, ePedidos listaP[], int t
 			}
 		}
 	}
+
 	return flag;
 }
+void InicializarAuxPed(ePedidos lista[], int tam, eAuxPedido* auxPed)
+{
+	for(int i=0; i<tam; i++)
+	{
+		auxPed[i].contador = 0;
+		auxPed[i].acumulador = 0;
+		auxPed[i].id = lista[i].idCliente;
+	}
+}
+//------------------------------------------------------------------------
+void recorrer(ePedidos lista[], int tam, eAuxPedido aux[])
+{
+    for(int i=0; i<tam;i++)
+	{
+	    contar(lista[i], tam, aux);
+	}
+}
+void contar(ePedidos unPedido, int tam, eAuxPedido aux[])
+{
+	for(int i=0; i<tam; i++)
+	{
+		if(aux[i].id == unPedido.idPedido)
+		{
+			aux[i].contador++;
+		}
+	}
+}
+//-------------------------------------------------------------------------
 int imprimirListaPedisdosPendientes(eClientes listaC[], int tamC, ePedidos listaP[], int tamP)
 {
 	int flag;
@@ -101,36 +130,7 @@ int imprimirListaPedisdosPendientes(eClientes listaC[], int tamC, ePedidos lista
 	}
 	return flag;
 }
-void contarCliente(ePedidos lista[], int tam, eAuxPedido aux[])
-{
-	for(int i=0; i<tam;i++)
-	{
-		for(int j=0; j<tam; j++)
-		{
-			if(aux[i].id == lista[j].idCliente)
-			{
-				aux[i].contador++;
-			}
-		}
-	}
-}
-int validarArray(eClientes listaC[], int tamC, ePedidos listaP[], int tamP, int idCli)
-{
-	int flag;
-	flag = 0;
-
-	for(int i=0; i<tamC; i++)
-	{
-		if(listaC[i].idCliente==idCli)
-		{
-			flag = 1;
-		}
-	}
-
-
-	return flag;
-}
-int imprimirPedidosProcesados(ePedidos listaP[], int tamP, eClientes listaC[], int tamC, eTiposPlasticos listaT[], int tamT)
+int imprimirPedidosProcesados(ePedidos listaP[], int tamP, eClientes listaC[], int tamC)
 {
 	int flag;
 	flag = 0;
@@ -167,6 +167,7 @@ int pedidosPorLocalidad(eClientes listaC[], int tamC, ePedidos listaP[], int tam
 	InicializarAuxLoc(listaP, tamP, aux);
 	flag = 0;
 
+    imprimirClientesConPedidos(listaC, tamC, listaP, tamP);
 	pedirLocalidad(aux, tamC);
 
 	for(int i=0; i<tamP; i++)
@@ -214,3 +215,54 @@ void pedirLocalidad(eAuxLocalidad aux[], int tam)
 		break;
 	}
 }
+int promedios(eClientes listaC[], int tamC, ePedidos listaP[], int tamP)
+{
+    int flag;
+    float promedio;
+    eAuxPedido aux[tamP];
+    InicializarAuxPed(listaP, tamP, aux);
+	flag = 0;
+
+	printf("ID \t Empresa \t\t Cuit \t\t Direccion \t\t Localidad \t Kgs.Prom.PP.\n");
+	for(int i=0; i<tamC; i++)
+	{
+		for(int j=0; j<tamP; j++)
+		{
+			if(listaC[i].isEmpty==FALSE && listaC[i].idCliente==listaP[j].idCliente && listaP[j].estado==PENDIENTE)
+			{
+				recorrerPed(listaP, tamP, aux);
+				promedio = aux[j].acumulador / aux[j].contador;
+				printf("%-8d %-20s %-20s %-20s %-20s %.2f\n", listaC[i].idCliente,
+															listaC[i].nombreEmpresa,
+															listaC[i].cuit,
+															listaC[i].direccion,
+															listaC[i].localidad,
+															promedio);
+				flag = 1;
+				break;
+			}
+		}
+	}
+	return flag;
+}
+//------------------------------------------------------------------------
+void recorrerPed(ePedidos lista[], int tam, eAuxPedido aux[])
+{
+    for(int i=0; i<tam;i++)
+	{
+	    contarCli(lista[i], tam, aux);
+	}
+}
+void contarCli(ePedidos unPedido, int tam, eAuxPedido aux[])
+{
+	for(int i=0; i<tam; i++)
+	{
+		if(aux[i].id == unPedido.idCliente)
+		{
+			aux[i].contador++;
+			aux[i].acumulador += unPedido.kgPp;
+		}
+	}
+}
+//-------------------------------------------------------------------------
+

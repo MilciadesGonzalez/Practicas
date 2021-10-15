@@ -1,15 +1,7 @@
-/*
- ============================================================================
- Name        : PrimerParcial.c
- Author      : Milciades Gonzalez
- Version     :
- ============================================================================
- */
-
 #include <stdio.h>
 #include <stdlib.h>
-#include "menu.h"
 #include "nexo.h"
+#include "inputs.h"
 
 
 #define TAMCLIENTES 100
@@ -26,19 +18,14 @@ int main(void) {
 	int opcionSubMenu;
 	eClientes listaClientes[TAMCLIENTES];
 	ePedidos listaPedidos[TAMPEDIDOS];
-	eTiposPlasticos listaTipos[TAMTIPOS] =
-	{
-			{1,1,"HDPE"},
-			{1,2,"LDPE"},
-			{1,3,"PP"}
-	};
 
 	contadorIdCli = 0;
 	contadorIdPed = 0;
 	Inicializar(listaClientes, TAMCLIENTES);
 	InicializarP(listaPedidos, TAMPEDIDOS);
-	harcodearCliente(listaClientes, 1, "Grupo Z", "30111122220", "Siempre viva 4000", "Sprinfield");
-	harcodearCliente(listaClientes, 2, "Recolex", "30123456781", "Calle Falsa 123", "Sprinfield");
+
+	harcodearCliente(listaClientes, 1, "Grupo Z", "30111122220", "Siempre viva 4000", "Lanus");
+	harcodearCliente(listaClientes, 2, "Recolex", "30123456781", "Calle Falsa 123", "Caba");
 
 
 	do{
@@ -76,49 +63,56 @@ int main(void) {
 					printf("\n");
 			break;
 			case 5:
-					if(ProcesarPedido(listaPedidos, TAMPEDIDOS, listaTipos, TAMTIPOS)==0)
-					{
-						printf("No se encontró pedido para procesar.");
-					}
-					printf("\n");
+			        if(ProcesarPedido(listaPedidos, TAMPEDIDOS)==0)
+			        {
+			            printf("No se encontró pedido para procesar.");
+			        }
+			        printf("\n");
 			break;
 			case 6:
-					if(imprimirListaclientes(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
+			        if(imprimirClientesConPedidos(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
 					{
 						printf("No hay clientes activos para mostrar.");
 					}
 					printf("\n");
 			break;
 			case 7:
-					if(imprimirListaPedisdosPendientes(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
+			        if(imprimirListaPedisdosPendientes(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
 					{
 						printf("No hay pedidos para mostrar.");
 					}
 					printf("\n");
 			break;
 			case 8:
-					if(imprimirPedidosProcesados(listaPedidos, TAMPEDIDOS, listaClientes, TAMCLIENTES, listaTipos, TAMTIPOS)==0)
+			        if(imprimirPedidosProcesados(listaPedidos, TAMPEDIDOS, listaClientes, TAMCLIENTES)==0)
 					{
 						printf("No hay pedidos para mostrar.");
 					}
 					printf("\n");
 			break;
 			case 9:
-					if(pedidosPorLocalidad(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
+			        if(pedidosPorLocalidad(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
 					{
 						printf("No hay pedidos pendientes para dicha localidad.");
 					}
 					printf("\n");
 			break;
 			case 10:
+			        if(promedios(listaClientes, TAMCLIENTES, listaPedidos, TAMPEDIDOS)==0)
+					{
+						printf("No se puede mostrar promedios.");
+					}
+					printf("\n");
 			break;
 			case 11:
+			        printf("Gracias por usar la app.");
+			        printf("\n");
 			break;
 			default:
 			break;
 		}
 
-	}while(opcion!=11);
+	}while(opcion==11);
 
 
 	return EXIT_SUCCESS;
